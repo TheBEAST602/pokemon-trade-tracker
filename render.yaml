@@ -1,0 +1,22 @@
+# Optional Render Blueprint. You can also create the web service by hand (see README).
+services:
+  - type: web
+    name: pokemon-trade-tracker-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: APP_API_KEY
+        sync: false
+      - key: APP_ALLOWED_ORIGIN
+        sync: false
+      - key: APP_TIMEZONE
+        value: Asia/Kolkata

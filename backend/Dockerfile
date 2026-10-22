@@ -1,0 +1,14 @@
+# Render's native runtimes do not include Java, so the API ships as a Docker image.
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn -B -q dependency:go-offline
+COPY src ./src
+RUN mvn -B -q -DskipTests package
+
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/pokemon-tracker.jar app.jar
+ENV JAVA_OPTS="-XX:+UseSerialGC -XX:MaxRAMPercentage=70"
+EXPOSE 8080
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar"]

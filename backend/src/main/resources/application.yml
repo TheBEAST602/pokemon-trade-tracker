@@ -1,0 +1,29 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: pokemon-trade-tracker
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pokemon_tracker}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 0
+      max-lifetime: 300000      # 5 min: drop connections before Neon closes them
+      idle-timeout: 120000
+      connection-timeout: 30000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none            # schema is owned by Flyway
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: always
+
+app:
+  api-key: ${APP_API_KEY:dev-key}
+  allowed-origin: ${APP_ALLOWED_ORIGIN:http://localhost:5173}
+  timezone: ${APP_TIMEZONE:Asia/Kolkata}

@@ -1,0 +1,14 @@
+# Local Postgres only: `docker compose up -d`, then run the API with the default settings.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: pokemon_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
